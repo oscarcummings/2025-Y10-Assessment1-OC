@@ -34,7 +34,7 @@ class Servo:
         self.__max_u16_duty = max_u16_duty
         self.min_angle = min_angle
         self.max_angle = max_angle
-        self.__initialise(pin)
+        self.__initialise(29)
 
 
     def move(self, angle):

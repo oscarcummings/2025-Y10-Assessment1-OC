@@ -21,6 +21,17 @@ class Motor:
         self.distance_counter = 0
         self.distance = 0    # centimetres
         self.moving = False
+        self.speed = 0
+
+    def get_speed(self):
+        return self.speed
+    
+    def change_speed(self, speed):
+        self.speed = speed
+        self.pwm.duty_u16(self._speed_actual(speed))
+
+    def distance_completed(self):
+        return self.distance_counter * (Motor.WHEEL_CIRC / Motor.ENCODER_SLOTS)
 
     def distance_travelled(self, pin):
         self.distance_counter += 1
