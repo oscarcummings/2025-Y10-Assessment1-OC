@@ -63,59 +63,63 @@ def adjust_speed(speed):
 servo.move(90)
 sleep_ms(300)
 
-# # move forward 22 cetimeters
-left_motor.forward(80, 20)
-right_motor.forward(80, 20)
-
-# # wait for the move to be finished 
-while left_motor.moving or right_motor.moving:
-     sleep_ms(20)
-     adjust_speed(80)
-
-sleep_ms(300)
-servo.move(90)
-sleep_ms(1000)
-distance = sensor.get_distance()
-message = f'Forward distance is {distance}'
-logger.log(message)
-
-
-if distance <= (30):
-    servo.move(90)
-    distance = sensor.get_distance()
-    message = f'Forward distance is {distance}'
-    logger.log(message)
-    left_motor.stop()
-    right_motor.stop()
-    left_motor.deinit()
-    right_motor.deinit()
-    sleep_ms(1000)
-    servo.move(0)
-    sleep_ms(1000)
-    left_motor.forward(80, 18)
-    right_motor.forward(0, 0)
-    sleep_ms(1000)
-    left_motor.stop()
-    right_motor.stop()
-    left_motor.deinit()
-    right_motor.deinit()
-    sleep_ms(1500)
+while True:
+    # move forward 22 centimeters
+    left_motor.forward(80, 20)
+    right_motor.forward(80, 20)
+    while left_motor.moving or right_motor.moving:
+        sleep_ms(20)
+        adjust_speed(80)
+    sleep_ms(300)
     servo.move(90)
     sleep_ms(1000)
     distance = sensor.get_distance()
     message = f'Forward distance is {distance}'
     logger.log(message)
-    if distance >= (15):
-        left_motor.forward(80, 60)
-        right_motor.forward(90, 60)
-        while left_motor.moving or right_motor.moving:
-            sleep_ms(20)
-            adjust_speed(80)
+
+    if distance <= 30:
+        servo.move(90)
+        distance = sensor.get_distance()
+        message = f'Forward distance is {distance}'
+        logger.log(message)
+        left_motor.stop()
+        right_motor.stop()
+        left_motor.deinit()
+        right_motor.deinit()
         sleep_ms(1000)
-        left_motor.forward(0, 0)
-        right_motor.forward(80, 18)
+        servo.move(0)
+        sleep_ms(1000)
+        left_motor.forward(80, 18)
+        right_motor.forward(0, 0)
         sleep_ms(1000)
         left_motor.stop()
         right_motor.stop()
         left_motor.deinit()
         right_motor.deinit()
+        sleep_ms(1500)
+        servo.move(90)
+        sleep_ms(1000)
+        distance = sensor.get_distance()
+        message = f'Forward distance is {distance}'
+        logger.log(message)
+        if distance >= 15:
+            left_motor.forward(80, 60)
+            right_motor.forward(80, 60)
+            while left_motor.moving or right_motor.moving:
+                sleep_ms(20)
+                adjust_speed(80)
+            sleep_ms(300)
+            left_motor.forward(0, 0)
+            right_motor.forward(80, 18)
+            sleep_ms(1000)
+            left_motor.forward(80, 60)
+            right_motor.forward(80, 60)
+            while left_motor.moving or right_motor.moving:
+                sleep_ms(20)
+                adjust_speed(80)
+            left_motor.stop()
+            right_motor.stop()
+            left_motor.deinit()
+            right_motor.deinit()
+    # Optionally add a short sleep to avoid a tight loop
+    sleep_ms(500)
